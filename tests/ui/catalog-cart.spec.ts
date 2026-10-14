@@ -34,9 +34,10 @@ test("[AE-UI-003] displays product details", async ({
   await homePage.openProducts();
   await productsPage.openFirstProductDetails("top");
 
-  await expect(page.getByText(/availability:/i)).toBeVisible();
-  await expect(page.getByText(/condition:/i)).toBeVisible();
-  await expect(page.getByText(/brand:/i)).toBeVisible();
+  const productDetails = page.locator(".product-information");
+  await expect(productDetails).toContainText(/availability:/i);
+  await expect(productDetails).toContainText(/condition:/i);
+  await expect(productDetails).toContainText(/brand:/i);
 });
 
 test("[AE-UI-004] adds a searched product to the cart", async ({

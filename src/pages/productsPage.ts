@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class ProductsPage {
   constructor(private readonly page: Page) {}
@@ -18,6 +18,8 @@ export class ProductsPage {
     await this.firstProduct(searchTerm)
       .getByRole("link", { name: /view product/i })
       .click();
+    await expect(this.page).toHaveURL(/\/product_details\/\d+$/);
+    await expect(this.page.locator(".product-information")).toBeVisible();
   }
 
   async continueShopping(): Promise<void> {

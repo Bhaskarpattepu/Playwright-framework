@@ -118,6 +118,8 @@ TEST-CASE-CATALOG.md              Case IDs, setup/actions, expected results, and
 5. **Cleanup:** `testAccount` deletes its account after the test, including when the test fails. UI registration and checkout cases also delete the account they create after successful completion.
 6. **Results:** The console and HTML report list each test by its stable case ID. On failure, Playwright retains the trace, screenshot, and video to help diagnose the issue.
 
+Browser tests block Google ad-network requests because the public demo can inject an ad interstitial over the controls being tested.
+
 Tests are independent and may run in parallel. Do not rely on one case creating state for another; create unique test data in the case or a fixture.
 
 ## Regression cases and traceability

@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class CartPage {
   constructor(private readonly page: Page) {}
@@ -9,6 +9,15 @@ export class CartPage {
 
   async proceedToCheckout(): Promise<void> {
     await this.page.getByText("Proceed To Checkout").click();
+  }
+
+  async continueToPayment(): Promise<void> {
+    await this.page.getByRole("link", { name: /place order/i }).click();
+    await this.page.waitForURL(
+      (url) => url.pathname.replace(/\/$/, "") === "/payment",
+      { timeout: 15_000 },
+    );
+    await expect(this.page.locator('[data-qa="name-on-card"]')).toBeVisible();
   }
 
   async placeOrder(): Promise<void> {

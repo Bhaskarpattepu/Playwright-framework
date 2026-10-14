@@ -19,6 +19,13 @@ interface Fixtures {
 }
 
 export const test = base.extend<Fixtures>({
+  page: async ({ page }, use) => {
+    await page.route(
+      /https?:\/\/(?:[^/]+\.)?(?:googlesyndication\.com|doubleclick\.net|googleadservices\.com)(?:[/:?#]|$)/i,
+      (route) => route.abort(),
+    );
+    await use(page);
+  },
   request: async ({ playwright }, use) => {
     const apiRequest = await playwright.request.newContext({
       baseURL:
